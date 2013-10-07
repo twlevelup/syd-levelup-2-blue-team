@@ -18,8 +18,8 @@ function Player:new(game, config)
     newPlayer.x = config.x or 100
     newPlayer.y = config.y or ScreenHeight - newPlayer.size.y
     newPlayer.dy = config.dy or 0
-    newPlayer.jump_height = config.jump_height or 300
-    newPlayer.gravity = config.gravity or 400
+    newPlayer.jump_height = config.jump_height or 800
+    newPlayer.gravity = config.gravity or 2000
     newPlayer.speed = config.speed or 5
 
     newPlayer.keys = config.keys or {
