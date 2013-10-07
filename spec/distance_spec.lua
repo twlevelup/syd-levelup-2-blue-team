@@ -5,7 +5,8 @@ describe("Distance", function()
         local graphics_spy = {
             print = spy.new(function() end),
             newFont = spy.new(function() end),
-            setFont = spy.new(function() end)
+            setFont = spy.new(function() end),
+            setColor = spy.new(function() end)
         }
 
         return graphics_spy

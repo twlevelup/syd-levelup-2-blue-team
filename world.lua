@@ -21,8 +21,8 @@ function  World:new(game)
     newWorld.graphics =  {
          source = "assets/images/background.png",
     }
-    newWorld.graphics.image = love.graphics.newImage(newWorld.graphics.source)
-    newWorld.graphics.quad = love.graphics.newQuad(0,0, newWorld.graphics.image:getWidth(), ScreenHeight, newWorld.graphics.image:getWidth(), newWorld.graphics.image:getHeight())
+    newWorld.graphics.image = game.graphics.newImage(newWorld.graphics.source)
+    newWorld.graphics.quad = game.graphics.newQuad(0,0, newWorld.graphics.image:getWidth(), ScreenHeight, newWorld.graphics.image:getWidth(), newWorld.graphics.image:getHeight())
 
     return setmetatable(newWorld, self)
 end

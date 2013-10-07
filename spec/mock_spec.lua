@@ -35,6 +35,13 @@ mock_graphics = function ()
     return { 
         getHeight = function ()
             return 300
+        end,
+        newQuad = spy.new(function() end),
+        newImage = function ()
+            return {
+                getWidth = spy.new(function() end),
+                getHeight = spy.new(function() end)
+            }
         end
     }
 end
