@@ -6,43 +6,55 @@ World = {}
 World.__index = World
 setmetatable(World, {__index = Entity})
 
-
--- instantiate the world class
 function  World:new(game)
-	-- body
 	local newWorld = Entity:new(game)
 
     newWorld.type = "world"
-    newWorld.x = 0
-    newWorld.y = 0
+    newWorld.view_width = 0
+    newWorld.view_height = 0
+
     newWorld.size = {
         x = ScreenWidth,
         y = ScreenHeight
     }
 
-
     newWorld.graphics =  {
          source = "assets/images/background.png",
-
     }
+    newWorld.graphics.image = love.graphics.newImage(newWorld.graphics.source)
+    newWorld.graphics.quad = love.graphics.newQuad(0,0, newWorld.graphics.image:getWidth(), ScreenHeight, newWorld.graphics.image:getWidth(), newWorld.graphics.image:getHeight())
 
     return setmetatable(newWorld, self)
 end
 
 function World:update(dt)
-    local dx = 0
-    local dy = 0
+    if self.view_width > -ScreenWidth then            
+        self.view_width = self.view_width - 2
+        if self.view_width <= -ScreenWidth then
+            self.view_width = 0
+        end
+    end
 end
 
 function World:draw()
+    love.graphics.drawq(self.graphics.image, self.graphics.quad, self.view_width, self.view_height)
+    love.graphics.drawq(self.graphics.image, self.graphics.quad, ScreenWidth + self.view_width, self.view_height)
 end
 
--- NOTE: seems weird but too lazy to handle both axis, not required right now
 function World:onScreen(entity)
+    return World:rightOfLeftBorder(entity) and World:leftOfRightBorder(entity)
+end
+
+function World:rightOfLeftBorder(entity)
     local onScreen = true
-    if entity.x > self.size.x then
+    if entity.x + entity.size.x < 0 then
         onScreen = false
     end
+    return onScreen
+end
+
+function World:leftOfRightBorder(entity)
+    local onScreen = true
     if entity.x + entity.size.x < 0 then
         onScreen = false
     end
