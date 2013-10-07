@@ -4,6 +4,7 @@ require 'scary_animal'
 require 'obstacle'
 require 'world'
 require 'distance'
+require 'panicmeter'
 require 'conf'
 
 love.animation = require 'vendor/anim8'
@@ -17,6 +18,7 @@ local view_height = 0
 
 local player = Player:new(love)
 local distance = Distance:new(love)
+local panicmeter = Panicmeter:new(love)
 
 local cron = require 'cron'
 
@@ -27,20 +29,19 @@ function spawnScaryAnimal()
 end
 
 function love.load()
-
     table.insert(entities, world)
-    table.insert(entities, distance)
     table.insert(entities, player)
+    table.insert(entities, distance)
+    table.insert(entities, panicmeter)
 
     love.input.bind('up', 'up')
     love.input.bind('left', 'left')
     love.input.bind('right', 'right')
     love.input.bind('down', 'down')
 
-    -- more info on cron here http://tannerrogalsky.com/blog/2012/09/19/favourite-lua-libraries/
-
     math.randomseed(os.time())
 
+    -- more info on cron here http://tannerrogalsky.com/blog/2012/09/19/favourite-lua-libraries/
     cron.after(math.random(2, 4), spawnScaryAnimal)
 
 end

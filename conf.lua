@@ -6,9 +6,15 @@
 -- options and defaults.
 ScreenWidth = 700
 ScreenHeight = 500
+
+-- Distance meter constants
+DistanceFontSize = 20
 DistanceMeterYOffset = 30
 DistanceMeterXOffset = ScreenWidth - 260
-DistanceFontSize = 20
+
+-- Panic meter constants
+PanicMeterXOffset = 50
+PanicMeterYOffset = 30
 
 function love.conf(config)
     config.title = "New Game - Alex's Team"
