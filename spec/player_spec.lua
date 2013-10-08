@@ -75,6 +75,7 @@ describe("Player", function()
                 player.graphics.animation = mock_animation()
 
                 collidingEntity = Entity:new({})
+                collidingEntity.type = "scary_animal" --Max note: panic should only increase when we collide with scary animal
                 collidingEntity.x = 10
                 collidingEntity.y = 10
                 collidingEntity.size = {

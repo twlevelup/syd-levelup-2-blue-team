@@ -6,6 +6,7 @@ require 'world'
 require 'distance'
 require 'panicmeter'
 require 'conf'
+require 'person'
 
 love.animation = require 'vendor/anim8'
 
@@ -22,10 +23,43 @@ local panicmeter = Panicmeter:new(love)
 
 local cron = require 'cron'
 
+local spawningCrowd = false
 
 function spawnScaryAnimal()
     local scaryAnimal = ScaryAnimal:new(love)
     table.insert(entities, scaryAnimal)
+end
+
+function removeOutOfBoundsCrowds()
+    local i = 1
+    local hadPerson = false
+    while i <= #entities do
+       if entities[i].type ~= nil and entities[i].type == "person" then
+          if not world:rightOfLeftBorder(entities[i]) then
+            table.remove(entities, i)
+          else
+            hadPerson = true
+            i = i + 1
+          end
+        else
+          i = i + 1
+        end
+    end      
+    return hadPerson
+end
+
+function spawnCrowd()
+    local i = 0
+    local lastPerson = nil
+    for i=0, math.random(0, 1) do
+      local person = Person:createRandomPerson(love)
+      if lastPerson ~= nil then
+        person.x = (lastPerson.size.x) + lastPerson.x        
+      end
+      lastPerson = person
+      table.insert(entities, person)
+    end
+    spawningCrowd = false
 end
 
 function love.load()
@@ -52,6 +86,10 @@ function love.update(dt)
 
     local i = 1
     
+    if spawningCrowd or removeOutOfBoundsCrowds() == false then
+      spawnCrowd()
+    end
+
     while i <= #entities do
         local removedItem = false
         if entities[i].type ~= nil and entities[i].type == 'scary_animal'

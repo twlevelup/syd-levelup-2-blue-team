@@ -23,6 +23,7 @@ function Player:new(game, config)
     newPlayer.speed = config.speed or 5
     newPlayer.panic = config.panic or 0
     newPlayer.already_collided_with = config.already_collided_with or {}
+    newPlayer.isCollidingWithPerson = false
 
     newPlayer.keys = config.keys or {
         up = "up"
@@ -66,9 +67,13 @@ function Player:new(game, config)
 end
 
 function Player:collide(other)
-    if self:firstTimeCollision(other) then
-        self:increasePanic()   
-        other.already_collided = true
+    if other.type == "scary_animal" then
+        if self:firstTimeCollision(other) then
+            self:increasePanic()   
+            other.already_collided = true
+        end
+    elseif other.type == "person" then
+        self.isCollidingWithPerson = true
     end
     self.x = self.lastPosition.x
     self.y = self.lastPosition.y
@@ -109,6 +114,11 @@ function Player:update(dt)
         x = self.x,
         y = self.y
     }
+
+    if self.isCollidingWithPerson == true then
+        self.x = self.x - 2
+        self.isCollidingWithPerson = false
+    end
 
     self.dy = self.dy + self.gravity * dt
     self.y = self.y + self.dy * dt
