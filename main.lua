@@ -50,11 +50,6 @@ function love.update(dt)
 
     cron.update(dt)
 
-    -- loop over scary animals
-        -- if off screen
-            -- remove
-            -- and respawn
-
     local i = 1
     
     while i <= #entities do
@@ -81,11 +76,22 @@ function love.update(dt)
             end
         end
     end
+    panicmeter:setPanic(player)
 end
 
+function isGameOver()
+    return player:isCaught() == true
+end
 
 function love.draw()
-    for _, e in pairs(entities) do
-        e:draw()
+    if isGameOver() == true then
+        if distance.final_distance == nil then
+            distance.final_distance = distance:getDistance()
+        end
+        world:drawGameOver(distance.final_distance)
+    else
+        for _, e in pairs(entities) do
+            e:draw()
+        end
     end
 end

@@ -13,14 +13,14 @@ describe("Scary Animals", function()
             assert.is.equal(scaryAnimal.y, ScreenHeight - scaryAnimal.size.y)
         end)
 
-        it("should be moving at speed 3 from right to left", function()
+        it("should be moving at speed 9 from right to left", function()
 
             local scaryAnimal = ScaryAnimal:new({})
             local origin_x = scaryAnimal.x
 
             scaryAnimal:update(dt)
 
-            assert.is.equal(scaryAnimal.speed, 3)
+            assert.is.equal(scaryAnimal.speed, 9)
             assert.is.equal(scaryAnimal.x, origin_x - scaryAnimal.speed)
 
         end)

@@ -16,7 +16,7 @@ function ScaryAnimal:new(game)
     newScaryAnimal.x = ScreenWidth
     newScaryAnimal.y = ScreenHeight - newScaryAnimal.size.y
 
-    newScaryAnimal.speed = 3
+    newScaryAnimal.speed = 9
 
     newScaryAnimal.graphics = {
         source = "assets/images/scary-animal-sprites-wolf.png"

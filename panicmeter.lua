@@ -12,23 +12,16 @@ function Panicmeter:new(game, config)
     local newPanicmeter = Entity:new(game)
 
     newPanicmeter.type = "Panicmeter"
-    newPanicmeter.counter =  config.counter or 0
     game.graphics.setFont(game.graphics.newFont('assets/fonts/LilyScriptOne-Regular.ttf', DistanceFontSize))
     newPanicmeter.size = config.size or {
           x = 250,
           y = 25
-      }
+    }
+    newPanicmeter.counter = config.counter or 0
     newPanicmeter.x = config.x or PanicMeterXOffset
     newPanicmeter.y = config.y or PanicMeterYOffset
 
     return setmetatable(newPanicmeter, self)
-end
-
-function Panicmeter:update(dt)
-    self.counter = self.counter - 0.25 * dt
-    if self.counter < 0 then
-        self.counter = 0
-    end
 end
 
 function Panicmeter:draw()  
@@ -46,14 +39,14 @@ function Panicmeter:draw()
     love.graphics.setColor(255, 255, 255,255);
 end
 
-function Panicmeter:incPanic()
-    self.counter = math.min(self.counter + 20, 100)
-end
-
-function Panicmeter:getPanic()
+function Panicmeter:update(dt)
     if self.counter == nil then
         return 0
     else
         return math.floor(self.counter)
     end
+end
+
+function Panicmeter:setPanic(player)
+    self.counter = player.panic
 end

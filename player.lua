@@ -18,9 +18,11 @@ function Player:new(game, config)
     newPlayer.x = config.x or 100
     newPlayer.y = config.y or ScreenHeight - newPlayer.size.y
     newPlayer.dy = config.dy or 0
-    newPlayer.jump_height = config.jump_height or 800
+    newPlayer.jump_height = config.jump_height or 1000
     newPlayer.gravity = config.gravity or 2000
     newPlayer.speed = config.speed or 5
+    newPlayer.panic = config.panic or 0
+    newPlayer.already_collided_with = config.already_collided_with or {}
 
     newPlayer.keys = config.keys or {
         up = "up"
@@ -64,8 +66,20 @@ function Player:new(game, config)
 end
 
 function Player:collide(other)
+    if self:firstTimeCollision(other) then
+        self:increasePanic()   
+        other.already_collided = true
+    end
     self.x = self.lastPosition.x
     self.y = self.lastPosition.y
+end
+
+function Player:firstTimeCollision(colliding_with)
+    return colliding_with.already_collided == false
+end
+
+function Player:increasePanic()
+    self.panic = self.panic + PanicIncrease
 end
 
 function Player:stopFallingThroughFloor()
@@ -80,6 +94,10 @@ end
 
 function Player:handleJump()
     self.dy = -self.jump_height
+end
+
+function Player:isCaught()
+    return self.panic >= 100
 end
 
 function Player:update(dt)

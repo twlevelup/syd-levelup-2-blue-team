@@ -119,6 +119,28 @@ describe("Player", function()
                 assert.is.equal(player.x, 10)
                 assert.is.equal(player.y, 9)
             end)
+
+            it("should increase my panic by 20%", function()
+                local old_panic = player.panic
+                player:collide(collidingEntity)
+                assert.is_true(player.panic > old_panic)
+            end)
+
+            it("should increase my panic only once for each scary animal you collide with", function()
+                local old_panic = player.panic
+                player:collide(collidingEntity)
+                local inter_panic = player.panic
+                player:collide(collidingEntity)
+                assert.is_true(player.panic == inter_panic)
+            end)
+
+            describe("#firstTimeCollision", function()
+                it("should return false if animal already been collided with", function()
+                    assert.is_true(player:firstTimeCollision(collidingEntity))
+                    collidingEntity.already_collided = true
+                    assert.is_false(player:firstTimeCollision(collidingEntity))
+                end)
+            end)
         end)
 
         describe("player movement", function()

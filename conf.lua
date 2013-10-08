@@ -15,6 +15,9 @@ DistanceMeterXOffset = ScreenWidth - 260
 -- Panic meter constants
 PanicMeterXOffset = 50
 PanicMeterYOffset = 30
+DistanceFontSize = 20
+-- How much the panic increased by when you collide with a scary animal
+PanicIncrease = 20
 
 function love.conf(config)
     config.title = "New Game - Alex's Team"
