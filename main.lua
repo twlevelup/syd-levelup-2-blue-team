@@ -48,6 +48,45 @@ local graphic_specs = {
     }    
 }
 
+local crowd_specs = 
+{
+    {
+         size = {
+            x = 40,
+            y = 121
+        },
+        image = "assets/images/boy.png"
+    },     
+    {
+         size = {
+            x = 51,
+            y = 110
+        },
+        image = "assets/images/SmallPerson.png"
+    },
+    {
+         size = {
+            x = 50,
+            y = 114
+        },
+        image = "assets/images/Person2.png"
+    },  
+    {
+         size = {
+            x = 51,
+            y = 105
+        },
+        image = "assets/images/Person3.png"
+    }, 
+    {
+        size = {
+            x = 78,
+            y = 105
+        },
+        image = "assets/images/Celine3.png"
+    }
+}
+
 function spawnScaryAnimal()
     local r = math.random(0,1)
     local scaryAnimal = nil
@@ -81,12 +120,14 @@ function spawnCrowd()
     local i = 0
     local lastPerson = nil
     for i=0, math.random(0, 1) do
-      local person = Person:createRandomPerson(love)
-      if lastPerson ~= nil then
-        person.x = (lastPerson.size.x) + lastPerson.x        
-      end
-      lastPerson = person
-      table.insert(entities, person)
+        local personIndex = math.random(1, table.getn(crowd_specs))
+        local image_specs = crowd_specs[personIndex]
+        local person = Person:new(love, image_specs)
+        if lastPerson ~= nil then
+            person.x = (lastPerson.size.x) + lastPerson.x        
+        end
+        lastPerson = person
+        table.insert(entities, person)
     end
     spawningCrowd = false
 end
