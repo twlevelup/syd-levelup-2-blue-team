@@ -19,6 +19,9 @@ DistanceFontSize = 20
 -- How much the panic increased by when you collide with a scary animal
 PanicIncrease = 20
 
+-- Speed of the camera (this is applied to all movement in the game)
+CameraXSpeed = 4
+
 function love.conf(config)
     config.title = "New Game - Alex's Team"
     config.screen.width = ScreenWidth

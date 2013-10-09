@@ -20,8 +20,8 @@ describe("Scary Animals", function()
 
             scaryAnimal:update(dt)
 
-            assert.is.equal(scaryAnimal.speed, 9)
-            assert.is.equal(scaryAnimal.x, origin_x - scaryAnimal.speed)
+            assert.is.equal(scaryAnimal.speed, 5)
+            assert.is.equal(scaryAnimal.x, origin_x - scaryAnimal.speed - CameraXSpeed)
 
         end)
     end)
@@ -59,12 +59,14 @@ describe("Scary Animals", function()
                     x = 41,
                     y = 50
                 },
-                image = "assets/images/someImg.png"
+                image = "assets/images/someImg.png",
+                frames = 9
             }
             local scaryAnimal = ScaryAnimal:new({}, test_graphic_spec)
             assert.is.equal(scaryAnimal.graphics.source, "assets/images/someImg.png")
             assert.is.equal(scaryAnimal.size.y, 50)
             assert.is.equal(scaryAnimal.size.x, 41)            
+            --not sure how to test test_graphic_spec.frames == 9
         end)
     end)
 

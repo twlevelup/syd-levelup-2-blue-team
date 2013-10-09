@@ -7,6 +7,7 @@ require 'distance'
 require 'panicmeter'
 require 'conf'
 require 'person'
+require 'scary_animal_movement_strategies'
 
 love.animation = require 'vendor/anim8'
 
@@ -53,7 +54,7 @@ function spawnScaryAnimal()
     if r == 0 then        
         scaryAnimal = ScaryAnimal:new(love, graphic_specs.scary_fox)
     else
-        scaryAnimal = ScaryAnimal:new(love, graphic_specs.scary_porcupine)
+        scaryAnimal = ScaryAnimal:new(love, graphic_specs.scary_porcupine, create_stop_go_strategy())
     end
     table.insert(entities, scaryAnimal)
 end

@@ -108,7 +108,7 @@ end
 
 function Person:update(dt)
 
-    self.x = self.x - 4 -- - CameraXSpeed
+    self.x = self.x - CameraXSpeed
 
     if self.graphics.animation ~= nil then
         self.graphics.animation:update(dt)

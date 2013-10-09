@@ -54,6 +54,14 @@ mock_game = function()
     }
 end
 
+mock_animal = function(aspeed)
+    return {
+        speed = aspeed,
+        x = 0,
+        y = 0
+    }
+end
+
 mock_world = function()
     local mock_world = {}
     

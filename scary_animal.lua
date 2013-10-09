@@ -28,7 +28,7 @@ function ScaryAnimal:new(game, graphic_spec, movement_strategy)
     newScaryAnimal.x = ScreenWidth
     newScaryAnimal.y = ScreenHeight - newScaryAnimal.size.y
 
-    newScaryAnimal.speed = 9
+    newScaryAnimal.speed = 5
 
     if game.graphics ~= nil and game.animation ~= nil then
         newScaryAnimal.graphics.sprites = game.graphics.newImage(newScaryAnimal.graphics.source)
@@ -55,10 +55,10 @@ end
 
 function ScaryAnimal:update(dt)
 
-    if movement_strategy == nil then
-        self.x = self.x - self.speed
+    if self.movement_strategy == nil then
+        self.x = self.x - self.speed - CameraXSpeed
     else
-        movement_strategy.doMovement(self)
+        self.movement_strategy(self, dt)
     end
     if self.graphics.animation ~= nil then
         self.graphics.animation:update(dt)
