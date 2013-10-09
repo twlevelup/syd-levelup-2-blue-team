@@ -79,10 +79,6 @@ function Player:collide(other)
     elseif other.type == "person" then
         self.isCollidingWithPerson = true
     end
-    --START: removing this will fix player movement (but break associated tests)
-    self.x = self.lastPosition.x
-    self.y = self.lastPosition.y
-    --END--
 end
 
 function Player:firstTimeCollision(colliding_with)
