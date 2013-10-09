@@ -54,4 +54,23 @@ mock_game = function()
     }
 end
 
+mock_world = function()
+    local mock_world = {}
+    
+    World2 = {}
+    World2.__index = World2
 
+    function World2:onScreen(e)
+        local x = 0
+        local y = 0
+        local w = 400
+        local h = 400
+        if(e.x > w or e.x + e.size.x < 0 or e.y + e.size.y < 0 or e.y > h) then
+            return false
+        else
+            return true
+        end
+    end
+
+    return setmetatable(mock_world, World2)
+end

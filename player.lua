@@ -6,15 +6,16 @@ Player = {}
 Player.__index = Player
 setmetatable(Player, {__index = Entity})
 
-function Player:new(game, config)
+function Player:new(game, world, config)
     local config = config or {}
 
     local newPlayer = Entity:new(game)
     newPlayer.type = "player"
     newPlayer.size = config.size or {
-        x = 98,
-        y = 60
+        x = 52,
+        y = 50
     }
+    newPlayer.world = world
     newPlayer.x = config.x or 100
     newPlayer.y = config.y or ScreenHeight - newPlayer.size.y
     newPlayer.dy = config.dy or 0
@@ -30,7 +31,7 @@ function Player:new(game, config)
     }
 
     newPlayer.graphics = config.graphics or {
-        source = "assets/images/nyancat-sprites.png",
+        source = "assets/images/PlayerAnimalSprites2.png",
         facing = "right"
     }
 
@@ -58,7 +59,7 @@ function Player:new(game, config)
             newPlayer.graphics.sprites:getHeight()
         )
         newPlayer.graphics.animation = game.animation.newAnimation(
-            newPlayer.graphics.grid("1-6", 1),
+            newPlayer.graphics.grid("1-4", 1),
             0.05
         )
     end
@@ -75,8 +76,10 @@ function Player:collide(other)
     elseif other.type == "person" then
         self.isCollidingWithPerson = true
     end
+    --START: removing this will fix player movement (but break associated tests)
     self.x = self.lastPosition.x
     self.y = self.lastPosition.y
+    --END--
 end
 
 function Player:firstTimeCollision(colliding_with)
@@ -103,6 +106,10 @@ end
 
 function Player:isCaught()
     return self.panic >= 100
+end
+
+function Player:isOutOfBounds()
+    return not self.world:onScreen(self)
 end
 
 function Player:update(dt)

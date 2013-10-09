@@ -17,7 +17,7 @@ local max_view = -450
 local view_width = 0
 local view_height = 0
 
-local player = Player:new(love)
+local player = Player:new(love, world)
 local distance = Distance:new(love)
 local panicmeter = Panicmeter:new(love)
 
@@ -118,7 +118,7 @@ function love.update(dt)
 end
 
 function isGameOver()
-    return player:isCaught() == true
+    return player:isCaught() == true or player:isOutOfBounds()
 end
 
 function love.draw()
