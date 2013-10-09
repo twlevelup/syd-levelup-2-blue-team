@@ -36,7 +36,8 @@ describe("Player", function()
                 player.game.input = mock_input('none').input
 
                 player:update(0.1)
-                assert.is_true(player.x == 10)
+                assert.is.equal(10, player.x)
+--                assert.is_true(player.x == 10)
                 assert.is_true(player.y > 10)
                 assert.are.same(player.lastPosition, {x = 10, y = 10})
             end)
@@ -85,7 +86,23 @@ describe("Player", function()
                 }
             end)
 
-            it("should increase my panic by 20%", function()
+            it("should not increase my panic if the entity is NOT a scary animal", function()
+                collidingCrowd = Entity:new({})
+                collidingCrowd.type = "person"
+                collidingCrowd.x = 10
+                collidingCrowd.y = 10
+                collidingCrowd.size = {
+
+                    x = 10,
+                    y = 10
+                }
+
+                local old_panic = player.panic
+                player:collide(collidingCrowd)
+                assert.is_true(player.panic == old_panic)
+            end)
+
+            it("should increase my panic by 20% if the entity is a scary animal", function()
                 local old_panic = player.panic
                 player:collide(collidingEntity)
                 assert.is_true(player.panic > old_panic)

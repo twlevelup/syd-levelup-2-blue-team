@@ -20,6 +20,7 @@ function Player:new(game, world, config)
     newPlayer.world = world
     newPlayer.x = config.x or 100
     newPlayer.y = config.y or ScreenHeight - newPlayer.size.y
+    newPlayer.originalX = newPlayer.x
     newPlayer.dy = config.dy or 0
     newPlayer.jump_height = config.jump_height or 1000
     newPlayer.gravity = config.gravity or 2000
