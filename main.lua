@@ -25,8 +25,36 @@ local cron = require 'cron'
 
 local spawningCrowd = false
 
+
+local graphic_specs = {
+    scary_fox = 
+    {
+         size = {
+            x = 64,
+            y = 60
+        },
+        image = "assets/images/scary-animal-sprites-wolf.png",
+        frames = 3
+    }, 
+    scary_porcupine = 
+    {
+         size = {
+            x = 75,
+            y = 67
+        },
+        image = "assets/images/porcupine2.png",
+        frames = 1
+    }    
+}
+
 function spawnScaryAnimal()
-    local scaryAnimal = ScaryAnimal:new(love)
+    local r = math.random(0,1)
+    local scaryAnimal = nil
+    if r == 0 then        
+        scaryAnimal = ScaryAnimal:new(love, graphic_specs.scary_fox)
+    else
+        scaryAnimal = ScaryAnimal:new(love, graphic_specs.scary_porcupine)
+    end
     table.insert(entities, scaryAnimal)
 end
 

@@ -50,4 +50,22 @@ describe("Scary Animals", function()
 
     end)
 
+
+    describe("creating scary animal with image spec and movement strategy", function()
+
+        it("create scary animal with custom graphic_spec", function()
+            local test_graphic_spec = {
+                size = {
+                    x = 41,
+                    y = 50
+                },
+                image = "assets/images/someImg.png"
+            }
+            local scaryAnimal = ScaryAnimal:new({}, test_graphic_spec)
+            assert.is.equal(scaryAnimal.graphics.source, "assets/images/someImg.png")
+            assert.is.equal(scaryAnimal.size.y, 50)
+            assert.is.equal(scaryAnimal.size.x, 41)            
+        end)
+    end)
+
 end)

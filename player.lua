@@ -12,8 +12,10 @@ function Player:new(game, world, config)
     local newPlayer = Entity:new(game)
     newPlayer.type = "player"
     newPlayer.size = config.size or {
-        x = 52,
-        y = 50
+--        x = 52,
+ --       y = 50
+           x = 57,
+           y = 59
     }
     newPlayer.world = world
     newPlayer.x = config.x or 100
@@ -31,7 +33,8 @@ function Player:new(game, world, config)
     }
 
     newPlayer.graphics = config.graphics or {
-        source = "assets/images/PlayerAnimalSprites2.png",
+        source = "assets/images/rabbit.png",
+--        source = "assets/images/PlayerAnimalSprites2.png",
         facing = "right"
     }
 
@@ -59,7 +62,7 @@ function Player:new(game, world, config)
             newPlayer.graphics.sprites:getHeight()
         )
         newPlayer.graphics.animation = game.animation.newAnimation(
-            newPlayer.graphics.grid("1-4", 1),
+            newPlayer.graphics.grid("1-1", 1),
             0.05
         )
     end
