@@ -1,6 +1,7 @@
 require 'person'
 require 'scary_animal'
 require 'imagespecs'
+require 'scary_animal_movement_strategies'
 
 EntityManager = {}
 EntityManager.__index = EntityManager
