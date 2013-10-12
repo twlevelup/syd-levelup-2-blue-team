@@ -4,8 +4,6 @@ require 'imagespecs'
 require 'scary_animal_movement_strategies'
 require 'screen'
 
---local entities = {}
-
 -- more info on cron here http://tannerrogalsky.com/blog/2012/09/19/favourite-lua-libraries/
 local cron = require 'cron'
 
@@ -45,7 +43,7 @@ function EntityManager:update(dt)
     self.panicmeter:setPanic(self.player)
 
     if self:isGameOver() then 
-        --player:dispose()
+        self.player:dispose()
         screenChange(GameOverScreen:new(self.game, self:getDistance()))
     end
 end

@@ -133,7 +133,6 @@ function Player:update(dt)
         self.graphics.animation:update(dt)
     end
 
-    --[[
     if self.sound.moving.sample ~= nil then
         if dy ~= 0 then
             self.sound.moving.sample:play()
@@ -141,7 +140,6 @@ function Player:update(dt)
             self.sound.moving.sample:stop()
         end
     end
-    --]]
 end
 
 function Player:dispose()

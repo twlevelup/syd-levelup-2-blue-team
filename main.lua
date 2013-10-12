@@ -10,9 +10,6 @@ require 'screen'
 
 love.animation = require 'vendor/anim8'
 
---local entity_manager = EntityManager:new(love)
---local gameoverscreen = nil
-
 local cur_screen = EntityManager:new(love)
 
 function love.load()
