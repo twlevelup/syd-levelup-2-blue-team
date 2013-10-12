@@ -4,7 +4,7 @@ require 'world'
 require 'distance'
 require 'panicmeter'
 require 'conf'
-require 'entitymanager'
+require 'maingamescreen'
 require 'gameoverscreen'
 require 'screen'
 
