@@ -1,13 +1,10 @@
 require 'input'
 require 'player'
---require 'scary_animal'
 require 'obstacle'
 require 'world'
 require 'distance'
 require 'panicmeter'
 require 'conf'
---require 'person'
---require 'scary_animal_movement_strategies'
 require 'entitymanager'
 
 love.animation = require 'vendor/anim8'
