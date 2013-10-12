@@ -6,41 +6,35 @@ require 'panicmeter'
 require 'conf'
 require 'entitymanager'
 require 'gameoverscreen'
+require 'screen'
 
 love.animation = require 'vendor/anim8'
 
-local entity_manager = EntityManager:new(love)
-local gameoverscreen = nil
+--local entity_manager = EntityManager:new(love)
+--local gameoverscreen = nil
+
+local cur_screen = EntityManager:new(love)
 
 function love.load()
-    entity_manager.load()
+    cur_screen:load(this)
 
     love.input.bind('up', 'up')
     love.input.bind('left', 'left')
     love.input.bind('right', 'right')
     love.input.bind('down', 'down')
+    love.input.bind('return', 'enter')
 
     math.randomseed(os.time())
 end
 
 function love.update(dt)
-    if not entity_manager:isGameOver() then    
-        entity_manager:update(dt)
-    end
-end
-
-function isGameOver()
-    return entity_manager:isGameOver()
+    cur_screen:update(dt)
 end
 
 function love.draw()
-    if isGameOver() == true then
-        if gameoverscreen == nil then
-            gameoverscreen = GameOverScreen:new(love)
-            gameoverscreen:setDistance(entity_manager:getDistance())
-        end
-        gameoverscreen:draw()
-    else
-        entity_manager:draw()
-    end
+    cur_screen:draw()
+end
+
+function screenChange(screen)
+    cur_screen = screen
 end

@@ -1,16 +1,14 @@
 require 'entity'
 require 'conf'
+require 'screen'
 
 GameOverScreen = {}
 GameOverScreen.__index = GameOverScreen
+setmetatable(GameOverScreen, {__index = Screen})
 
-function GameOverScreen:new(game)
-	local newGameOverScreen = {}
+function GameOverScreen:new(_game, _distance)
+	local newGameOverScreen = {distance = _distance, game = _game}
   return setmetatable(newGameOverScreen, self)
-end
-
-function GameOverScreen:setDistance(distance)
-  self.distance = distance
 end
 
 function GameOverScreen:draw()
@@ -26,3 +24,12 @@ function GameOverScreen:draw()
   love.graphics.setColor(255, 255, 255,255);
 end
 
+function GameOverScreen:update()
+    --print(self.game.input)
+    if self.game.input.pressed("enter") then
+      local em = EntityManager:new(self.game)
+      em:load()
+      screenChange(em)
+    end
+
+end
