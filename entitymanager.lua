@@ -3,19 +3,48 @@ require 'scary_animal'
 require 'imagespecs'
 require 'scary_animal_movement_strategies'
 
+local entities = {}
+
+-- more info on cron here http://tannerrogalsky.com/blog/2012/09/19/favourite-lua-libraries/
+local cron = require 'cron'
+local world = nil
+local player = nil
+local distance = nil
+local panicmeter = nil
+
 EntityManager = {}
 EntityManager.__index = EntityManager
 
 function EntityManager:new(game)     
     local newEntityManager = {}
-
+    newEntityManager.game = game
     newEntityManager.spawningCrowd = false
     newEntityManager.spawningScaryAnimal = false
+
+    world = World:new(love)
+    player = Player:new(love, world)
+    distance = Distance:new(love)
+    panicmeter = Panicmeter:new(love)
 
     return setmetatable(newEntityManager, self)
 end
 
-function EntityManager:update(dt, entities, world, cron)
+function EntityManager:load()
+    table.insert(entities, world)
+    table.insert(entities, player)
+    table.insert(entities, distance)
+    table.insert(entities, panicmeter)
+end    
+
+function EntityManager:update(dt)
+    cron.update(dt)
+    self:doCrowdRemoveSpawn(entities, cron)
+    self:doScaryAnimalRemoveSpawn(entities, cron)
+    self:doUpateEntitiesAndCollide(dt, entities)
+    panicmeter:setPanic(player)
+end
+
+function EntityManager:doCrowdRemoveSpawn()
     if not self.spawningCrowd and self:removeOutOfBoundsCrowds(entities, world) == false then
         self.spawningCrowd = true
         cron.after(math.random(1, 3), 
@@ -25,7 +54,9 @@ function EntityManager:update(dt, entities, world, cron)
             end
         )
     end
+end
 
+function EntityManager:doScaryAnimalRemoveSpawn()
     if not self.spawningScaryAnimal and self:removeOutOfBoundsScaryAnimals(entities, world) == false then
         self.spawningScaryAnimal = true
         cron.after(math.random(2, 4), 
@@ -37,7 +68,20 @@ function EntityManager:update(dt, entities, world, cron)
     end
 end
 
-function EntityManager:spawnScaryAnimal(entities, cron)
+function EntityManager:doUpateEntitiesAndCollide(dt)
+    for _, entity in pairs(entities) do
+        entity:update(dt)
+        for _, other in pairs(entities) do
+            if other ~= entity then
+                if entity:collidingWith(other) then
+                    entity:collide(other)
+                end
+            end
+        end
+    end
+end
+
+function EntityManager:spawnScaryAnimal()
     local r = math.random(0,1)
     
     local scaryAnimal = nil
@@ -50,7 +94,7 @@ function EntityManager:spawnScaryAnimal(entities, cron)
     table.insert(entities, scaryAnimal)
 end
 
-function EntityManager:removeOutOfBoundsScaryAnimals(entities, world)
+function EntityManager:removeOutOfBoundsScaryAnimals()
     local i = 1
 
     local hadScaryAnimal = false
@@ -73,7 +117,7 @@ function EntityManager:removeOutOfBoundsScaryAnimals(entities, world)
     return hadScaryAnimal
 end
 
-function EntityManager:removeOutOfBoundsCrowds(entities, world)
+function EntityManager:removeOutOfBoundsCrowds()
     local i = 1
     local hadPerson = false
     while i <= #entities do
@@ -91,7 +135,7 @@ function EntityManager:removeOutOfBoundsCrowds(entities, world)
     return hadPerson
 end
 
-function EntityManager:spawnCrowd(entities, cron)
+function EntityManager:spawnCrowd()
     local i = 0
     local lastPerson = nil
     for i=0, math.random(0, 1) do
@@ -105,3 +149,18 @@ function EntityManager:spawnCrowd(entities, cron)
         table.insert(entities, person)
     end
 end
+
+function EntityManager:isGameOver()
+    return player:isCaught() == true or player:isOutOfBounds()
+end    
+
+function EntityManager:draw()
+    for _, e in pairs(entities) do
+        e:draw()
+    end
+end
+
+function EntityManager:getDistance()
+    return distance:getDistance()
+end
+
