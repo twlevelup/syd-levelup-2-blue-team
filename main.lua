@@ -11,10 +11,6 @@ love.animation = require 'vendor/anim8'
 local entities = {}
 local world = World:new(love)
 
-local max_view = -450
-local view_width = 0
-local view_height = 0
-
 local player = Player:new(love, world)
 local distance = Distance:new(love)
 local panicmeter = Panicmeter:new(love)
