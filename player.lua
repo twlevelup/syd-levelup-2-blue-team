@@ -12,8 +12,6 @@ function Player:new(game, world, config)
     local newPlayer = Entity:new(game)
     newPlayer.type = "player"
     newPlayer.size = config.size or {
---        x = 52,
- --       y = 50
            x = 57,
            y = 59
     }
@@ -35,7 +33,6 @@ function Player:new(game, world, config)
 
     newPlayer.graphics = config.graphics or {
         source = "assets/images/rabbit.png",
---        source = "assets/images/PlayerAnimalSprites2.png",
         facing = "right"
     }
 
