@@ -12,7 +12,6 @@ function Panicmeter:new(game, config)
     local newPanicmeter = Entity:new(game)
 
     newPanicmeter.type = "Panicmeter"
-    game.graphics.setFont(game.graphics.newFont('assets/fonts/LilyScriptOne-Regular.ttf', DistanceFontSize))
     newPanicmeter.size = config.size or {
           x = 250,
           y = 25
