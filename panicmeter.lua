@@ -25,17 +25,31 @@ function Panicmeter:new(game, config)
 end
 
 function Panicmeter:draw()  
+    self:drawBackground()
+    self:drawFillBar()
+    self:drawBorder()
+    self:resetColor()
+end
+
+function Panicmeter:drawBackground()
     self.game.graphics.setColor(255, 255, 255, 255);
     self.game.graphics.rectangle("fill", self.x, self.y, self.size.x, self.size.y)
-    
+end
+
+function Panicmeter:drawBorder()
+    self.game.graphics.setColor(0, 0, 0, 255);
+    self.game.graphics.rectangle("line", self.x, self.y, self.size.x, self.size.y)
+end
+
+function Panicmeter:drawFillBar()
     self.game.graphics.setColor(255, 0, 0, 255);
     self.game.graphics.rectangle("fill", self.x, self.y, ((self.counter/100.0) * self.size.x), self.size.y)
 
     self.game.graphics.setColor(200, 0, 0, 255);
     self.game.graphics.rectangle("line", self.x, self.y, ((self.counter/100.0) * self.size.x), self.size.y)
-    self.game.graphics.setColor(0, 0, 0, 255);
-    self.game.graphics.rectangle("line", self.x, self.y, self.size.x, self.size.y)
+end
 
+function Panicmeter:resetColor()
     love.graphics.setColor(255, 255, 255,255);
 end
 
