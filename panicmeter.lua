@@ -12,6 +12,7 @@ function Panicmeter:new(game, config)
     local newPanicmeter = Entity:new(game)
 
     newPanicmeter.type = "Panicmeter"
+    newPanicmeter.parent_type = "Background"
     newPanicmeter.size = config.size or {
           x = 250,
           y = 25

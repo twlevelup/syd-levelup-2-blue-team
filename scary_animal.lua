@@ -9,6 +9,7 @@ function ScaryAnimal:new(game, graphic_spec, movement_strategy)
 
     local newScaryAnimal = Entity:new(game)
     newScaryAnimal.type = "scary_animal"
+    newScaryAnimal.parent_type = "Foreground"
     if graphic_spec == nil then
         newScaryAnimal.size = {
             x = 64,

@@ -11,6 +11,7 @@ function Player:new(game, world, config)
 
     local newPlayer = Entity:new(game)
     newPlayer.type = "player"
+    newPlayer.parent_type = "Foreground"
     newPlayer.size = config.size or {
            x = 57,
            y = 59

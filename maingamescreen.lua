@@ -102,13 +102,11 @@ end
 function MainGameScreen:removeOutOfBoundsEntities(entity_type)
     local i = 1
     local remaining_entity_count = 0
---    local hadPerson = false
     while i <= #self.entities do
        if self.entities[i].type ~= nil and self.entities[i].type == entity_type then
           if not self.world:rightOfLeftBorder(self.entities[i]) then
             table.remove(self.entities, i)
           else
---            hadPerson = true
             remaining_entity_count = remaining_entity_count + 1
             i = i + 1
           end
@@ -118,49 +116,6 @@ function MainGameScreen:removeOutOfBoundsEntities(entity_type)
     end      
     return remaining_entity_count
 end
-
---[[
-
-function MainGameScreen:removeOutOfBoundsScaryAnimals()
-    local i = 1
-
-    local hadScaryAnimal = false
-    while i <= #self.entities do
-        local removedItem = false
-        if self.entities[i].type ~= nil and self.entities[i].type == 'scary_animal'
-            then
-            if not self.world:onScreen(self.entities[i]) then
-                table.remove(self.entities, i)
-                removedItem = true
-            else
-                hadScaryAnimal = true
-            end
-        end
-
-        if removedItem == false then
-            i = i + 1
-        end
-    end
-    return hadScaryAnimal
-end
-
-function MainGameScreen:removeOutOfBoundsCrowds()
-    local i = 1
-    local hadPerson = false
-    while i <= #self.entities do
-       if self.entities[i].type ~= nil and self.entities[i].type == "person" then
-          if not self.world:rightOfLeftBorder(self.entities[i]) then
-            table.remove(self.entities, i)
-          else
-            hadPerson = true
-            i = i + 1
-          end
-        else
-          i = i + 1
-        end
-    end      
-    return hadPerson
-end--]]
 
 function MainGameScreen:getDistance()
     return self.distance:getDistance()
@@ -187,6 +142,15 @@ end
 
 function MainGameScreen:draw()
     for _, e in pairs(self.entities) do
-        e:draw()
+        if e.parent_type == 'Foreground' then
+            self.game.graphics.push()
+            self.game.graphics.translate(0, -25)
+            e:draw()
+            self.game.graphics.pop()            
+        elseif e.parent_type == 'Background' then
+            e:draw()
+        else
+            error("Should have known parent type")
+        end
     end
 end

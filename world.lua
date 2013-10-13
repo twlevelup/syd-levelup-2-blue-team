@@ -12,6 +12,7 @@ function  World:new(game)
     newWorld.type = "world"
     newWorld.view_width = 0
     newWorld.view_height = 0
+    newWorld.parent_type = "Background"
 
     newWorld.size = {
         x = ScreenWidth,
