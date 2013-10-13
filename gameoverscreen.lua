@@ -25,9 +25,8 @@ function GameOverScreen:draw()
 end
 
 function GameOverScreen:update()
-    --print(self.game.input)
     if self.game.input.pressed("enter") then
-      local em = EntityManager:new(self.game)
+      local em = MainGameScreen:new(self.game)
       em:load()
       screenChange(em)
     end
