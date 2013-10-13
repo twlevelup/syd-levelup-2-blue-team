@@ -11,6 +11,8 @@ MainGameScreen = {}
 MainGameScreen.__index = MainGameScreen
 setmetatable(MainGameScreen, {__index = Screen})
 
+local foreground_y_offset = -25
+
 function MainGameScreen:new(game)     
     local newMainGameScreen = {}
     newMainGameScreen.game = game
@@ -144,7 +146,7 @@ function MainGameScreen:draw()
     for _, e in pairs(self.entities) do
         if e.parent_type == 'Foreground' then
             self.game.graphics.push()
-            self.game.graphics.translate(0, -25)
+            self.game.graphics.translate(0, foreground_y_offset)
             e:draw()
             self.game.graphics.pop()            
         elseif e.parent_type == 'Background' then
