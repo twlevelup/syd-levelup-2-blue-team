@@ -8,6 +8,7 @@ setmetatable(GameOverScreen, {__index = Screen})
 
 function GameOverScreen:new(_game, _distance)
 	local newGameOverScreen = {distance = _distance, game = _game}
+  newGameOverScreen.name = "gameoverscreen"
   return setmetatable(newGameOverScreen, self)
 end
 

@@ -2,7 +2,6 @@
 Ticks_Between_Change = 25
 
 function create_stop_go_strategy()   
-  --local ticksBetweenChange = 50
   local ticksSoFar = 0
   local standingStill = false
 

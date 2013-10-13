@@ -19,6 +19,7 @@ function MainGameScreen:new(game)
     newMainGameScreen.spawningCrowd = false
     newMainGameScreen.spawningScaryAnimal = false
     newMainGameScreen.entities = {}
+    newMainGameScreen.name = "maingamescreen"
 
     newMainGameScreen.world = World:new(love)
     newMainGameScreen.player = Player:new(love, newMainGameScreen.world)
