@@ -17,7 +17,7 @@ function Player:new(game, world, config)
            y = 59
     }
     newPlayer.world = world
-    newPlayer.x = config.x or 100
+    newPlayer.x = config.x or (ScreenWidth - newPlayer.size.x) / 2
     newPlayer.y = config.y or ScreenHeight - newPlayer.size.y
     newPlayer.originalX = newPlayer.x
     newPlayer.dy = config.dy or 0
@@ -27,6 +27,7 @@ function Player:new(game, world, config)
     newPlayer.panic = config.panic or 0
     newPlayer.already_collided_with = config.already_collided_with or {}
     newPlayer.isCollidingWithPerson = false
+    newPlayer.caught = false
 
     newPlayer.keys = config.keys or {
         up = "up"
@@ -77,9 +78,11 @@ function Player:new(game, world, config)
 end
 
 function Player:collide(other)
-    if other.type == "scary_animal" then
+    if other.type == "park_ranger" then
+        self.caught = true
+    elseif other.type == "scary_animal" then
         if self:firstTimeCollision(other) then
-            self:increasePanic()   
+            self:increasePanic()
             other.already_collided = true
         end
     elseif other.type == "person" then
@@ -117,6 +120,10 @@ function Player:playJumpSound()
 end
 
 function Player:isCaught()
+    return self.caught
+end
+
+function Player:isFrozenInPanic()
     return self.panic >= 100
 end
 

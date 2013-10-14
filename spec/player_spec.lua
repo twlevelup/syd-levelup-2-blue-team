@@ -19,13 +19,19 @@ describe("Player", function()
         end)
 
         describe("new player",function()
-			it("player should be on the floor", function()	
+			it("player should be on the floor", function()
                 local player = Player:new(mock_game())
                 player:update(0.1)
 
                 assert.is.equal(player.y, ScreenHeight - player.size.y)
-                assert.is.equal(100, player.x)
+                assert.is.equal((ScreenWidth - player.size.x) / 2, player.x)
             end)
+
+            it("player should not be caught by default", function()
+                local player = Player:new(mock_game())
+                assert.is.equal(player.caught, false)
+            end)
+
         end)
 
         describe("lastPosition", function()
@@ -80,7 +86,6 @@ describe("Player", function()
                 collidingEntity.x = 10
                 collidingEntity.y = 10
                 collidingEntity.size = {
-
                     x = 10,
                     y = 10
                 }
@@ -114,6 +119,12 @@ describe("Player", function()
                 local inter_panic = player.panic
                 player:collide(collidingEntity)
                 assert.is_true(player.panic == inter_panic)
+            end)
+
+            it("should be caught when it collides with a park ranger", function()
+                collidingEntity.type = "park_ranger"
+                player:collide(collidingEntity)
+                assert.is_true(player.caught == true)
             end)
 
             describe("#firstTimeCollision", function()
@@ -183,66 +194,66 @@ describe("Player", function()
         it("should return true if player is too far left", function()
             local player = Player:new(mock_game(), mock_world())
             player.x = -51
-            player.y = 0  
+            player.y = 0
             player.size.x = 50
-            player.size.y = 50   
+            player.size.y = 50
             assert.is_true(player:isOutOfBounds())
         end)
         it("should return true if player is too far right", function()
             local player = Player:new(mock_game(), mock_world())
             player.x = 401
-            player.y = 0  
+            player.y = 0
             player.size.x = 50
-            player.size.y = 50   
+            player.size.y = 50
             assert.is_true(player:isOutOfBounds())
         end)
         it("should return true if player is too far up", function()
             local player = Player:new(mock_game(), mock_world())
             player.x = 0
-            player.y = 401 
+            player.y = 401
             player.size.x = 50
-            player.size.y = 50   
+            player.size.y = 50
             assert.is_true(player:isOutOfBounds())
         end)
         it("should return true if player is too far down", function()
             local player = Player:new(mock_game(), mock_world())
             player.x = 0
-            player.y = -51  
+            player.y = -51
             player.size.x = 50
-            player.size.y = 50   
+            player.size.y = 50
             assert.is_true(player:isOutOfBounds())
         end)
 
         it("should return false if player is just within left border", function()
             local player = Player:new(mock_game(), mock_world())
             player.x = -50
-            player.y = 0  
+            player.y = 0
             player.size.x = 50
-            player.size.y = 50   
+            player.size.y = 50
             assert.is_false(player:isOutOfBounds())
         end)
         it("should return false if player is just within right border", function()
             local player = Player:new(mock_game(), mock_world())
             player.x = 400
-            player.y = 0  
+            player.y = 0
             player.size.x = 50
-            player.size.y = 50   
+            player.size.y = 50
             assert.is_false(player:isOutOfBounds())
         end)
         it("should return false if player is just within top border", function()
             local player = Player:new(mock_game(), mock_world())
             player.x = 0
-            player.y = 400  
+            player.y = 400
             player.size.x = 50
-            player.size.y = 50   
+            player.size.y = 50
             assert.is_false(player:isOutOfBounds())
         end)
         it("should return false if player is just within bottom border", function()
             local player = Player:new(mock_game(), mock_world())
             player.x = 0
-            player.y = -50  
+            player.y = -50
             player.size.x = 50
-            player.size.y = 50   
+            player.size.y = 50
             assert.is_false(player:isOutOfBounds())
         end)
 

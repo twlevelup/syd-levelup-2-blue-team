@@ -33,18 +33,16 @@ function  World:new(game)
     newWorld.graphics.quad = game.graphics.newQuad(0,0, newWorld.graphics.image:getWidth(), ScreenHeight, newWorld.graphics.image:getWidth(), newWorld.graphics.image:getHeight())
 
     if game.audio ~= nil then
-        newWorld.sound.play_music.sample = game.audio.newSource(newWorld.sound.play_music.source)
+        newWorld.sound.play_music.sample = game.audio.newSource(newWorld.sound.play_music.source, "static")
         newWorld.sound.play_music.sample:setLooping(true)
     end
-
-    -- newWorld.sound.play_music.sample:play()
 
     return setmetatable(newWorld, self)
 end
 
 
 function World:update(dt)
-    -- self:playGameMusic()
+    self:playGameMusic()
     if self.view_width > -ScreenWidth then            
         self.view_width = self.view_width - 4
         if self.view_width <= -ScreenWidth then
@@ -83,4 +81,3 @@ function World:leftOfRightBorder(entity)
     end
     return onScreen
 end
-

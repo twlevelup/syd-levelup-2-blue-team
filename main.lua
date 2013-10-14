@@ -1,5 +1,6 @@
 require 'input'
 require 'player'
+require 'park_ranger'
 require 'world'
 require 'distance'
 require 'leaderboard'
