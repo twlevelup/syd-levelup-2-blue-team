@@ -27,7 +27,6 @@ function MainGameScreen:new(game)
     newMainGameScreen.panicmeter = Panicmeter:new(love)
     newMainGameScreen.leaderboard = LeaderBoard:new(love)
 
-
     cron:reset()
 
     return setmetatable(newMainGameScreen, self)
