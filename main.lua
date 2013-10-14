@@ -4,9 +4,13 @@ require 'scary_animal'
 require 'obstacle'
 require 'world'
 require 'distance'
+require 'leaderboard'
 require 'conf'
 
 love.animation = require 'vendor/anim8'
+
+love.filesystem.setIdentity(identityDirName)
+
 
 local entities = {}
 local world = World:new(love)
@@ -17,6 +21,8 @@ local view_height = 0
 
 local player = Player:new(love)
 local distance = Distance:new(love)
+local leaderboard = LeaderBoard:new(love)
+
 
 local cron = require 'cron'
 
@@ -28,9 +34,13 @@ end
 
 function love.load()
 
+    -- leaderboard:readScores(distance)
+    -- leaderboard:writeScores()
+
     table.insert(entities, world)
-    table.insert(entities, distance)
     table.insert(entities, player)
+    table.insert(entities, distance)
+    -- table.insert(entities, leaderboard)
 
     love.input.bind('up', 'up')
     love.input.bind('left', 'left')
@@ -80,7 +90,16 @@ function love.update(dt)
             end
         end
     end
+
+    -- Need to check for the loose condition if not already.
+        -- if 'game over' then 
+            -- Load and display the leaderboard using...
+            -- leaderboard:readScores(distance)
+            -- table.insert(entities, leaderboard)
+            -- leaderboard:writeScores()
+
 end
+
 
 
 function love.draw()

@@ -9,6 +9,9 @@ ScreenHeight = 500
 DistanceMeterYOffset = 30
 DistanceMeterXOffset = ScreenWidth - 260
 DistanceFontSize = 20
+gameScoresFile = "gameScores.txt"
+identityDirName = "run_rabbit"
+maxScoresOnLeaderboard = 5
 
 function love.conf(config)
     config.title = "New Game - Alex's Team"
