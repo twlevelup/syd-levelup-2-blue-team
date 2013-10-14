@@ -116,7 +116,7 @@ function Player:playJumpSound()
     end
 end
 
-function Player:isCaught()
+function Player:isFrozenInPanic()
     return self.panic >= 100
 end
 
