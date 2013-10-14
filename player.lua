@@ -47,6 +47,9 @@ function Player:new(game, world, config)
         },
         jumping_2 = {
             source = "assets/sounds/jumping2.mp3"
+        },
+        panic = {
+            source = "assets/sounds/panic.mp3"
         }
     }
 
@@ -59,6 +62,7 @@ function Player:new(game, world, config)
         newPlayer.sound.moving.sample = game.audio.newSource(newPlayer.sound.moving.source)
         newPlayer.sound.moving.sample:setLooping(true)
         newPlayer.sound.jumping.sample = game.audio.newSource(newPlayer.sound.jumping.source)
+        newPlayer.sound.panic.sample = game.audio.newSource(newPlayer.sound.panic.source)
     end
 
     if game.graphics ~= nil and game.animation ~= nil then
@@ -95,7 +99,14 @@ function Player:firstTimeCollision(colliding_with)
 end
 
 function Player:increasePanic()
+    self:playPanicSound()
     self.panic = self.panic + PanicIncrease
+end
+
+function Player:playPanicSound()
+    if self.sound.panic.sample ~= nil then
+        self.sound.panic.sample:play()
+    end
 end
 
 function Player:stopFallingThroughFloor()
