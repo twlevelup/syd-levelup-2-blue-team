@@ -6,12 +6,24 @@
 -- options and defaults.
 ScreenWidth = 700
 ScreenHeight = 500
+
+-- Distance meter constants
+DistanceFontSize = 20
 DistanceMeterYOffset = 30
 DistanceMeterXOffset = ScreenWidth - 260
+
+-- Panic meter constants
+PanicMeterXOffset = 50
+PanicMeterYOffset = 30
 DistanceFontSize = 20
 gameScoresFile = "gameScores.txt"
 identityDirName = "run_rabbit"
 maxScoresOnLeaderboard = 5
+-- How much the panic increased by when you collide with a scary animal
+PanicIncrease = 20
+
+-- Speed of the camera (this is applied to all movement in the game)
+CameraXSpeed = 4
 
 function love.conf(config)
     config.title = "New Game - Alex's Team"

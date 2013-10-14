@@ -13,23 +13,10 @@ describe("on or off screen", function ()
             x = 10,
             y = 10
         }
-
+        newPlayer = Entity:new(game)
     end)
 
     it("should return true when an entity is on screen", function()
         assert.is.equal(world:onScreen(newEntity), true)
     end)
-
-   -- it("should return false when an entity is off screen screen to the left", function()
-   --      newEntity.x = -11
-   --      assert.is.equal(world:onScreen(newEntity), false)
-
-   --  end)
-
-   -- it("should return false when an entity is off screen screen to the right", function()
-   --      newEntity.x = 1000
-   --      assert.is.equal(world:onScreen(newEntity), false)
-
-   --  end)
-
 end)

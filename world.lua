@@ -29,7 +29,7 @@ end
 
 function World:update(dt)
     if self.view_width > -ScreenWidth then            
-        self.view_width = self.view_width - 2
+        self.view_width = self.view_width - 4
         if self.view_width <= -ScreenWidth then
             self.view_width = 0
         end
@@ -59,5 +59,18 @@ function World:leftOfRightBorder(entity)
         onScreen = false
     end
     return onScreen
+end
+
+function World:drawGameOver(distance)
+  local image = love.graphics.newImage( 'assets/images/game-over-screen.png' )
+  love.graphics.setColor(255, 255, 255,255);
+  local msg1 = "You were caught! But you made it " .. distance .. " meters. " 
+  local msg2 = "Press Enter to escape (play) again..."
+  local font = love.graphics.newFont('assets/fonts/LilyScriptOne-Regular.ttf', DistanceFontSize)
+  love.graphics.draw(image, 0, 0)
+  love.graphics.setColor(0, 0, 0,255);
+  love.graphics.print(msg1, ScreenWidth/2-font:getWidth(msg1)/2, ScreenHeight/2-font:getHeight());
+  love.graphics.print(msg2, ScreenWidth/2-font:getWidth(msg2)/2, ScreenHeight/2);
+  love.graphics.setColor(255, 255, 255,255);
 end
 

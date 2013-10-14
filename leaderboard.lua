@@ -1,6 +1,5 @@
 require 'input'
 require 'player'
-require 'obstacle'
 require 'world'
 require 'conf'
 require 'distance'

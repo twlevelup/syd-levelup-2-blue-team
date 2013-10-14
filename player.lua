@@ -6,28 +6,33 @@ Player = {}
 Player.__index = Player
 setmetatable(Player, {__index = Entity})
 
-function Player:new(game, config)
+function Player:new(game, world, config)
     local config = config or {}
 
     local newPlayer = Entity:new(game)
     newPlayer.type = "player"
     newPlayer.size = config.size or {
-        x = 98,
-        y = 60
+           x = 57,
+           y = 59
     }
+    newPlayer.world = world
     newPlayer.x = config.x or 100
     newPlayer.y = config.y or ScreenHeight - newPlayer.size.y
+    newPlayer.originalX = newPlayer.x
     newPlayer.dy = config.dy or 0
-    newPlayer.jump_height = config.jump_height or 800
+    newPlayer.jump_height = config.jump_height or 1000
     newPlayer.gravity = config.gravity or 2000
     newPlayer.speed = config.speed or 5
+    newPlayer.panic = config.panic or 0
+    newPlayer.already_collided_with = config.already_collided_with or {}
+    newPlayer.isCollidingWithPerson = false
 
     newPlayer.keys = config.keys or {
         up = "up"
     }
 
     newPlayer.graphics = config.graphics or {
-        source = "assets/images/nyancat-sprites.png",
+        source = "assets/images/rabbit.png",
         facing = "right"
     }
 
@@ -55,7 +60,7 @@ function Player:new(game, config)
             newPlayer.graphics.sprites:getHeight()
         )
         newPlayer.graphics.animation = game.animation.newAnimation(
-            newPlayer.graphics.grid("1-6", 1),
+            newPlayer.graphics.grid("1-1", 1),
             0.05
         )
     end
@@ -64,8 +69,22 @@ function Player:new(game, config)
 end
 
 function Player:collide(other)
-    self.x = self.lastPosition.x
-    self.y = self.lastPosition.y
+    if other.type == "scary_animal" then
+        if self:firstTimeCollision(other) then
+            self:increasePanic()   
+            other.already_collided = true
+        end
+    elseif other.type == "person" then
+        self.isCollidingWithPerson = true
+    end
+end
+
+function Player:firstTimeCollision(colliding_with)
+    return colliding_with.already_collided == false
+end
+
+function Player:increasePanic()
+    self.panic = self.panic + PanicIncrease
 end
 
 function Player:stopFallingThroughFloor()
@@ -82,6 +101,14 @@ function Player:handleJump()
     self.dy = -self.jump_height
 end
 
+function Player:isCaught()
+    return self.panic >= 100
+end
+
+function Player:isOutOfBounds()
+    return not self.world:onScreen(self)
+end
+
 function Player:update(dt)
     if self.game.input.pressed(self.keys.up) and self:isOnFloor() then
         self:handleJump();
@@ -91,6 +118,11 @@ function Player:update(dt)
         x = self.x,
         y = self.y
     }
+
+    if self.isCollidingWithPerson == true then
+        self.x = self.x - 2
+        self.isCollidingWithPerson = false
+    end
 
     self.dy = self.dy + self.gravity * dt
     self.y = self.y + self.dy * dt

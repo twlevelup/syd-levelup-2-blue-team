@@ -36,7 +36,8 @@ describe("Player", function()
                 player.game.input = mock_input('none').input
 
                 player:update(0.1)
-                assert.is_true(player.x == 10)
+                assert.is.equal(10, player.x)
+--                assert.is_true(player.x == 10)
                 assert.is_true(player.y > 10)
                 assert.are.same(player.lastPosition, {x = 10, y = 10})
             end)
@@ -75,6 +76,7 @@ describe("Player", function()
                 player.graphics.animation = mock_animation()
 
                 collidingEntity = Entity:new({})
+                collidingEntity.type = "scary_animal" --Max note: panic should only increase when we collide with scary animal
                 collidingEntity.x = 10
                 collidingEntity.y = 10
                 collidingEntity.size = {
@@ -84,40 +86,42 @@ describe("Player", function()
                 }
             end)
 
-            it("should move the player to its last position when colliding on the left side", function()
-                player.lastPosition = {x = 21, y = 10}
+            it("should not increase my panic if the entity is NOT a scary animal", function()
+                collidingCrowd = Entity:new({})
+                collidingCrowd.type = "person"
+                collidingCrowd.x = 10
+                collidingCrowd.y = 10
+                collidingCrowd.size = {
 
-                player:collide(collidingEntity)
+                    x = 10,
+                    y = 10
+                }
 
-                assert.is.equal(player.x, 21)
-                assert.is.equal(player.y, 10)
+                local old_panic = player.panic
+                player:collide(collidingCrowd)
+                assert.is_true(player.panic == old_panic)
             end)
 
-            it("should move the player to its last position when colliding on the right side", function()
-                player.lastPosition = {x = 9, y = 10}
-
+            it("should increase my panic by 20% if the entity is a scary animal", function()
+                local old_panic = player.panic
                 player:collide(collidingEntity)
-
-                assert.is.equal(player.x, 9)
-                assert.is.equal(player.y, 10)
+                assert.is_true(player.panic > old_panic)
             end)
 
-            it("should move the player to its last position when colliding on the top side", function()
-                player.lastPosition = {x = 10, y = 11}
-
+            it("should increase my panic only once for each scary animal you collide with", function()
+                local old_panic = player.panic
                 player:collide(collidingEntity)
-
-                assert.is.equal(player.x, 10)
-                assert.is.equal(player.y, 11)
+                local inter_panic = player.panic
+                player:collide(collidingEntity)
+                assert.is_true(player.panic == inter_panic)
             end)
 
-            it("should move the player to its last position when colliding on the bottom side", function()
-                player.lastPosition = {x = 10, y = 9}
-
-                player:collide(collidingEntity)
-
-                assert.is.equal(player.x, 10)
-                assert.is.equal(player.y, 9)
+            describe("#firstTimeCollision", function()
+                it("should return false if animal already been collided with", function()
+                    assert.is_true(player:firstTimeCollision(collidingEntity))
+                    collidingEntity.already_collided = true
+                    assert.is_false(player:firstTimeCollision(collidingEntity))
+                end)
             end)
         end)
 
@@ -164,6 +168,74 @@ describe("Player", function()
             end)
         end)
     end)
-end)
 
+    describe("player out of bounds tests", function()
+        it("should return true if player is too far left", function()
+            local player = Player:new(mock_game(), mock_world())
+            player.x = -51
+            player.y = 0  
+            player.size.x = 50
+            player.size.y = 50   
+            assert.is_true(player:isOutOfBounds())
+        end)
+        it("should return true if player is too far right", function()
+            local player = Player:new(mock_game(), mock_world())
+            player.x = 401
+            player.y = 0  
+            player.size.x = 50
+            player.size.y = 50   
+            assert.is_true(player:isOutOfBounds())
+        end)
+        it("should return true if player is too far up", function()
+            local player = Player:new(mock_game(), mock_world())
+            player.x = 0
+            player.y = 401 
+            player.size.x = 50
+            player.size.y = 50   
+            assert.is_true(player:isOutOfBounds())
+        end)
+        it("should return true if player is too far down", function()
+            local player = Player:new(mock_game(), mock_world())
+            player.x = 0
+            player.y = -51  
+            player.size.x = 50
+            player.size.y = 50   
+            assert.is_true(player:isOutOfBounds())
+        end)
+
+        it("should return false if player is just within left border", function()
+            local player = Player:new(mock_game(), mock_world())
+            player.x = -50
+            player.y = 0  
+            player.size.x = 50
+            player.size.y = 50   
+            assert.is_false(player:isOutOfBounds())
+        end)
+        it("should return false if player is just within right border", function()
+            local player = Player:new(mock_game(), mock_world())
+            player.x = 400
+            player.y = 0  
+            player.size.x = 50
+            player.size.y = 50   
+            assert.is_false(player:isOutOfBounds())
+        end)
+        it("should return false if player is just within top border", function()
+            local player = Player:new(mock_game(), mock_world())
+            player.x = 0
+            player.y = 400  
+            player.size.x = 50
+            player.size.y = 50   
+            assert.is_false(player:isOutOfBounds())
+        end)
+        it("should return false if player is just within bottom border", function()
+            local player = Player:new(mock_game(), mock_world())
+            player.x = 0
+            player.y = -50  
+            player.size.x = 50
+            player.size.y = 50   
+            assert.is_false(player:isOutOfBounds())
+        end)
+
+    end)
+end)
 

@@ -5,7 +5,8 @@ function Entity:new(game)
     local newEntity = {
         game = game,
         x = 0,
-        y = 0
+        y = 0,
+        already_collided = false
     }
 
     return setmetatable(newEntity, self)

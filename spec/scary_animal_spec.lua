@@ -13,15 +13,15 @@ describe("Scary Animals", function()
             assert.is.equal(scaryAnimal.y, ScreenHeight - scaryAnimal.size.y)
         end)
 
-        it("should be moving at speed 3 from right to left", function()
+        it("should be moving at speed 9 from right to left", function()
 
             local scaryAnimal = ScaryAnimal:new({})
             local origin_x = scaryAnimal.x
 
             scaryAnimal:update(dt)
 
-            assert.is.equal(scaryAnimal.speed, 3)
-            assert.is.equal(scaryAnimal.x, origin_x - scaryAnimal.speed)
+            assert.is.equal(scaryAnimal.speed, 5)
+            assert.is.equal(scaryAnimal.x, origin_x - scaryAnimal.speed - CameraXSpeed)
 
         end)
     end)
@@ -48,6 +48,26 @@ describe("Scary Animals", function()
             assert.spy(scaryAnimal.graphics.animation.update).was.called()
         end)
 
+    end)
+
+
+    describe("creating scary animal with image spec and movement strategy", function()
+
+        it("create scary animal with custom graphic_spec", function()
+            local test_graphic_spec = {
+                size = {
+                    x = 41,
+                    y = 50
+                },
+                image = "assets/images/someImg.png",
+                frames = 9
+            }
+            local scaryAnimal = ScaryAnimal:new({}, test_graphic_spec)
+            assert.is.equal(scaryAnimal.graphics.source, "assets/images/someImg.png")
+            assert.is.equal(scaryAnimal.size.y, 50)
+            assert.is.equal(scaryAnimal.size.x, 41)            
+            --not sure how to test test_graphic_spec.frames == 9
+        end)
     end)
 
 end)
