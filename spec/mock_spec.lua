@@ -25,7 +25,8 @@ end
 mock_sound = function()
     local sound_spy = {
         play = spy.new(function() end),
-        stop = spy.new(function() end)
+        stop = spy.new(function() end),
+        isStopped = spy.new(function() end)
     }
 
     return sound_spy
