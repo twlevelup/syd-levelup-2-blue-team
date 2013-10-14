@@ -17,7 +17,7 @@ describe("Leaderboard", function()
 
 			assert.equal(leaderboard.scores[1][1], "RUN")
 			assert.equal(leaderboard.scores[1][2], "10")
-			assert.equal(leaderboard.scores[2][1], "TEST")
+			assert.equal(leaderboard.scores[2][1], "YOU")
 			assert.equal(leaderboard.scores[2][2], 9)
 			assert.equal(leaderboard.scores[3][1], "RAB")
 			assert.equal(leaderboard.scores[3][2], "8")
