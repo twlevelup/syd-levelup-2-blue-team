@@ -10,7 +10,7 @@ LeaderBoard = {}
 LeaderBoard.__index = LeaderBoard
 setmetatable(LeaderBoard, {__index = Entity})
 
-function LeaderBoard:new(game)	
+function LeaderBoard:new(game)
 	local newLeaderBoard = Entity:new(game)
 	newLeaderBoard.type = "LeaderBoard"
 	newLeaderBoard.size = {
@@ -20,7 +20,7 @@ function LeaderBoard:new(game)
 
 	newLeaderBoard.scores = {}
 
-	game.graphics.setFont(game.graphics.newFont('assets/fonts/LilyScriptOne-Regular.ttf', DistanceFontSize))
+	game.graphics.setFont(game.graphics.newFont('assets/fonts/Ponyo.otf', DistanceFontSize))
 
 	return setmetatable(newLeaderBoard, self)
 end
@@ -43,14 +43,14 @@ function LeaderBoard:readScores()
 	file:close()
 
 	self.scores = scores
-end		
+end
 
 function LeaderBoard:updateScores(distance)
 	for i, x in ipairs(self.scores) do
 		if tonumber(x[2]) < distance then
 			table.insert(self.scores, i, {playerName, distance}) -- need player and player score
 			break
-		end 
+		end
 	end
 end
 
@@ -75,7 +75,7 @@ function LeaderBoard:update(dt)
 end
 
 function LeaderBoard:draw()
-	-- Positions of all strings and boxes are set in relation to the screen height and width and the size of the string to print.	
+	-- Positions of all strings and boxes are set in relation to the screen height and width and the size of the string to print.
 	local font = love.graphics.getFont()
 	local title = "Leaderboard"
 

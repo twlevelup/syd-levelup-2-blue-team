@@ -7,12 +7,12 @@ Distance = {}
 Distance.__index = Distance
 setmetatable(Distance, {__index = Entity})
 
-function Distance:new(game)	
+function Distance:new(game)
 	local newDistance = Entity:new(game)
 	newDistance.type = "Distance"
   newDistance.parent_type = "Background"
 	newDistance.counter = 0
-	game.graphics.setFont(game.graphics.newFont('assets/fonts/LilyScriptOne-Regular.ttf', DistanceFontSize))
+	game.graphics.setFont(game.graphics.newFont('assets/fonts/Ponyo.otf', DistanceFontSize))
 	newDistance.size = {
         x = 0,
         y = 0
