@@ -28,7 +28,7 @@ function  World:new(game)
             source = "assets/sounds/play_music.mp3"
         }     
     }
-
+    
     newWorld.graphics.image = game.graphics.newImage(newWorld.graphics.source)
     newWorld.graphics.quad = game.graphics.newQuad(0,0, newWorld.graphics.image:getWidth(), ScreenHeight, newWorld.graphics.image:getWidth(), newWorld.graphics.image:getHeight())
 
@@ -80,4 +80,8 @@ function World:leftOfRightBorder(entity)
         onScreen = false
     end
     return onScreen
+end
+
+function World:dispose()
+    self.sound.play_music.sample:stop() --else it will crash sooner or later
 end

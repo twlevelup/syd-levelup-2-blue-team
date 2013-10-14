@@ -51,6 +51,7 @@ function MainGameScreen:update(dt)
 
     if self:isGameOver() then
         self.player:dispose() -- this stops the sound loop; else the sound will 'overlap'
+        self.world:dispose()
         screenChange(GameOverScreen:new(self.game, self:getDistance()))
     end
 end
