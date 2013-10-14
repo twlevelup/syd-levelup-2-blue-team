@@ -1,4 +1,5 @@
 require 'distance'
+require 'spec/mock_spec'
 
 describe("Distance", function()
 	mock_graphics = function()
@@ -33,6 +34,17 @@ describe("Distance", function()
 			distance:draw()
 
 			assert.spy(game.graphics.print).was.called()
+		end)
+	end)
+
+	describe('#getDistance', function()
+		describe("should return 30 if called after 1 second", function()
+			local game = mock_game();
+			local distance = Distance:new(game)
+
+			distance:update(1)
+
+			assert.equals(distance:getDistance(), 30)
 		end)
 	end)
 end)

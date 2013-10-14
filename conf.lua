@@ -16,6 +16,9 @@ DistanceMeterXOffset = ScreenWidth - 260
 PanicMeterXOffset = 50
 PanicMeterYOffset = 30
 DistanceFontSize = 20
+gameScoresFile = "gameScores.txt"
+identityDirName = "run_rabbit"
+maxScoresOnLeaderboard = 5
 -- How much the panic increased by when you collide with a scary animal
 PanicIncrease = 20
 

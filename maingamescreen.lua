@@ -25,6 +25,8 @@ function MainGameScreen:new(game)
     newMainGameScreen.player = Player:new(love, newMainGameScreen.world)
     newMainGameScreen.distance = Distance:new(love)
     newMainGameScreen.panicmeter = Panicmeter:new(love)
+    newMainGameScreen.leaderboard = LeaderBoard:new(love)
+
 
     cron:reset()
 
