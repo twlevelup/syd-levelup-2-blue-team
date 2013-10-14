@@ -42,11 +42,21 @@ function Panicmeter:drawBorder()
 end
 
 function Panicmeter:drawFillBar()
-    self.game.graphics.setColor(255, 0, 0, 255);
-    self.game.graphics.rectangle("fill", self.x, self.y, ((self.counter/100.0) * self.size.x), self.size.y)
+	local percentage_full = (self.counter/100.0)
+	local fill_x = percentage_full * self.size.x
+	
+	self:drawFillBarFill(fill_x)
+	self:drawFillBarBorder(fill_x)
+end
 
+function Panicmeter:drawFillBarFill(fill_x)
+    self.game.graphics.setColor(255, 0, 0, 255);
+    self.game.graphics.rectangle("fill", self.x, self.y, fill_x, self.size.y)
+end
+
+function Panicmeter:drawFillBarBorder(fill_x)
     self.game.graphics.setColor(200, 0, 0, 255);
-    self.game.graphics.rectangle("line", self.x, self.y, ((self.counter/100.0) * self.size.x), self.size.y)
+    self.game.graphics.rectangle("line", self.x, self.y, fill_x, self.size.y)
 end
 
 function Panicmeter:resetColor()
