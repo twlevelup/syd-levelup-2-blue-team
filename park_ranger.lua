@@ -16,9 +16,9 @@ function ParkRanger:new(game)
         y = 114
     }
     newParkRanger.x = 0
-
+    newParkRanger.parent_type = "Foreground"
     newParkRanger.type = "park_ranger"
-    -- newParkRanger.x = ScreenWidth
+
     newParkRanger.y = ScreenHeight - newParkRanger.size.y -- - GroundYOffset
 
 

@@ -1,4 +1,5 @@
 require 'person'
+require 'park_ranger'
 require 'scary_animal'
 require 'imagespecs'
 require 'scary_animal_movement_strategies'
@@ -23,6 +24,7 @@ function MainGameScreen:new(game)
 
     newMainGameScreen.world = World:new(love)
     newMainGameScreen.player = Player:new(love, newMainGameScreen.world)
+    newMainGameScreen.park_ranger = ParkRanger:new(love)
     newMainGameScreen.distance = Distance:new(love)
     newMainGameScreen.panicmeter = Panicmeter:new(love)
     newMainGameScreen.leaderboard = LeaderBoard:new(love)
@@ -35,6 +37,7 @@ end
 function MainGameScreen:load()
     table.insert(self.entities, self.world)
     table.insert(self.entities, self.player)
+    table.insert(self.entities, self.park_ranger)
     table.insert(self.entities, self.distance)
     table.insert(self.entities, self.panicmeter)
 end
