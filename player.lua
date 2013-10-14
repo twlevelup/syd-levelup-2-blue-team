@@ -27,6 +27,7 @@ function Player:new(game, world, config)
     newPlayer.panic = config.panic or 0
     newPlayer.already_collided_with = config.already_collided_with or {}
     newPlayer.isCollidingWithPerson = false
+    newPlayer.caught = false
 
     newPlayer.keys = config.keys or {
         up = "up"
@@ -77,7 +78,9 @@ function Player:new(game, world, config)
 end
 
 function Player:collide(other)
-    if other.type == "scary_animal" then
+    if other.type == "park_ranger" then
+        self.caught = true
+    elseif other.type == "scary_animal" then
         if self:firstTimeCollision(other) then
             self:increasePanic()
             other.already_collided = true
@@ -114,6 +117,10 @@ function Player:playJumpSound()
     if self.sound.jumping.sample ~= nil then
         self.sound.jumping.sample:play()
     end
+end
+
+function Player:isCaught()
+    return self.caught
 end
 
 function Player:isFrozenInPanic()

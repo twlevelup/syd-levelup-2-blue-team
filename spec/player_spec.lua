@@ -26,6 +26,12 @@ describe("Player", function()
                 assert.is.equal(player.y, ScreenHeight - player.size.y)
                 assert.is.equal((ScreenWidth - player.size.x) / 2, player.x)
             end)
+
+            it("player should not be caught by default", function()
+                local player = Player:new(mock_game())
+                assert.is.equal(player.caught, false)
+            end)
+
         end)
 
         describe("lastPosition", function()
@@ -80,7 +86,6 @@ describe("Player", function()
                 collidingEntity.x = 10
                 collidingEntity.y = 10
                 collidingEntity.size = {
-
                     x = 10,
                     y = 10
                 }
@@ -114,6 +119,12 @@ describe("Player", function()
                 local inter_panic = player.panic
                 player:collide(collidingEntity)
                 assert.is_true(player.panic == inter_panic)
+            end)
+
+            it("should be caught when it collides with a park ranger", function()
+                collidingEntity.type = "park_ranger"
+                player:collide(collidingEntity)
+                assert.is_true(player.caught == true)
             end)
 
             describe("#firstTimeCollision", function()
