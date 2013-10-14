@@ -4,7 +4,7 @@ require 'world'
 require 'conf'
 require 'distance'
 
-playerName = "TEST" -- needs to be set in the game somehow.
+playerName = "YOU" -- needs to be set in the game somehow.
 
 LeaderBoard = {}
 LeaderBoard.__index = LeaderBoard
@@ -56,9 +56,6 @@ end
 
 function LeaderBoard:writeScores(distance)
 	-- Write the current leaderboard state to the game score file.
-
-	self:updateScores(distance)
-
     file = love.filesystem.newFile(gameScoresFile)
 	file:open('w')
 
@@ -82,25 +79,28 @@ function LeaderBoard:draw()
 	local font = love.graphics.getFont()
 	local title = "Leaderboard"
 
+	local offsetX = 100
+	local offsetY = 50
+
 	-- Draw the leaderboard main box
-	love.graphics.setColor(200, 255, 255, 255) -- white
-	love.graphics.rectangle("fill", ScreenWidth/4, ScreenHeight/4, ScreenWidth/2, ScreenHeight/2)
+	love.graphics.setColor(255, 255, 255, 255) -- white
+	love.graphics.rectangle("fill", ScreenWidth/4 + offsetX, ScreenHeight/4 + offsetY, ScreenWidth/2, ScreenHeight/2)
 
 	-- Draw the leaderboard black border
 	love.graphics.setColor(0, 0, 0, 255) -- black
-	love.graphics.rectangle("line", ScreenWidth/4, ScreenHeight/4, ScreenWidth/2, ScreenHeight/2)
+	love.graphics.rectangle("line", ScreenWidth/4 + offsetX, ScreenHeight/4 + offsetY, ScreenWidth/2, ScreenHeight/2)
 
 	-- Draw the leaderboard title
-	love.graphics.print(title, (ScreenWidth/2) - (font:getWidth(title)/2), (ScreenHeight/4))
+	love.graphics.print(title, (ScreenWidth/2) - (font:getWidth(title)/2) + offsetX, (ScreenHeight/4) + offsetY)
 
 	-- Draw the leaderboard entries
 	for i, x in ipairs(self.scores) do
 		if i <= maxScoresOnLeaderboard then
 			-- Draw the name
-			love.graphics.print(x[1], (3*ScreenWidth/8) - (font:getWidth(x[1])/2), (ScreenHeight/4) + (i * (ScreenHeight/((maxScoresOnLeaderboard + 1) * 2))))
+			love.graphics.print(x[1], (3*ScreenWidth/8) - (font:getWidth(x[1])/2) + offsetX, (ScreenHeight/4) + (i * (ScreenHeight/((maxScoresOnLeaderboard + 1) * 2))) + offsetY)
 
 			-- Draw the score
-			love.graphics.print(x[2], (5*ScreenWidth/8) - (font:getWidth(x[2])/2), (ScreenHeight/4) + (i * (ScreenHeight/((maxScoresOnLeaderboard + 1) * 2))))
+			love.graphics.print(x[2], (5*ScreenWidth/8) - (font:getWidth(x[2])/2) + offsetX, (ScreenHeight/4) + (i * (ScreenHeight/((maxScoresOnLeaderboard + 1) * 2))) + offsetY)
 		else
 			break
 		end
