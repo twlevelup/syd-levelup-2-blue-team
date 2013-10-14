@@ -40,6 +40,12 @@ function Player:new(game, world, config)
     newPlayer.sound = config.sound or {
         moving = {
             source = "assets/sounds/move.wav"
+        },
+        jumping = {
+            source = "assets/sounds/jumping.mp3"
+        },
+        jumping_2 = {
+            source = "assets/sounds/jumping2.mp3"
         }
     }
 
@@ -51,6 +57,7 @@ function Player:new(game, world, config)
     if game.audio ~= nil then
         newPlayer.sound.moving.sample = game.audio.newSource(newPlayer.sound.moving.source)
         newPlayer.sound.moving.sample:setLooping(true)
+        newPlayer.sound.jumping.sample = game.audio.newSource(newPlayer.sound.jumping.source)
     end
 
     if game.graphics ~= nil and game.animation ~= nil then
@@ -100,6 +107,9 @@ end
 
 function Player:handleJump()
     self.dy = -self.jump_height
+    if self.sound.jumping.sample ~= nil then
+        self.sound.jumping.sample:play()
+    end
 end
 
 function Player:isCaught()
