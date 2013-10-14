@@ -52,7 +52,7 @@ function World:update(dt)
 end
 
 function World:playGameMusic()
-    if self.sound.play_music.sample ~= nil then
+    if self.sound.play_music.sample ~= nil and self.sound.play_music.sample:isStopped() then
         self.sound.play_music.sample:play()
     end
 end
