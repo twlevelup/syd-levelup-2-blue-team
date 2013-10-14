@@ -17,7 +17,7 @@ function Player:new(game, world, config)
            y = 59
     }
     newPlayer.world = world
-    newPlayer.x = config.x or 100
+    newPlayer.x = config.x or (ScreenWidth - newPlayer.size.x) / 2
     newPlayer.y = config.y or ScreenHeight - newPlayer.size.y
     newPlayer.originalX = newPlayer.x
     newPlayer.dy = config.dy or 0
@@ -79,7 +79,7 @@ end
 function Player:collide(other)
     if other.type == "scary_animal" then
         if self:firstTimeCollision(other) then
-            self:increasePanic()   
+            self:increasePanic()
             other.already_collided = true
         end
     elseif other.type == "person" then
