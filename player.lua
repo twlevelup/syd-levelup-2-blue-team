@@ -107,6 +107,10 @@ end
 
 function Player:handleJump()
     self.dy = -self.jump_height
+    self:playJumpSound()
+end
+
+function Player:playJumpSound()
     if self.sound.jumping.sample ~= nil then
         self.sound.jumping.sample:play()
     end
