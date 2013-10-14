@@ -30,8 +30,8 @@ function ParkRanger:new(game)
             newParkRanger.graphics.sprites:getHeight()
         )
         newParkRanger.graphics.animation = game.animation.newAnimation(
-            newParkRanger.graphics.grid("1-1", 1),
-            0.05
+            newParkRanger.graphics.grid("1-2", 1),
+            0.1
         )
     end
 
