@@ -12,6 +12,7 @@ function  World:new(game)
     newWorld.type = "world"
     newWorld.view_width = 0
     newWorld.view_height = 0
+    newWorld.parent_type = "Background"
 
     newWorld.size = {
         x = ScreenWidth,
@@ -21,18 +22,40 @@ function  World:new(game)
     newWorld.graphics =  {
          source = "assets/images/background.png",
     }
+
+    newWorld.sound = {
+        play_music = {
+            source = "assets/sounds/play_music.mp3"
+        }     
+    }
+
     newWorld.graphics.image = game.graphics.newImage(newWorld.graphics.source)
     newWorld.graphics.quad = game.graphics.newQuad(0,0, newWorld.graphics.image:getWidth(), ScreenHeight, newWorld.graphics.image:getWidth(), newWorld.graphics.image:getHeight())
+
+    if game.audio ~= nil then
+        newWorld.sound.play_music.sample = game.audio.newSource(newWorld.sound.play_music.source)
+        newWorld.sound.play_music.sample:setLooping(true)
+    end
+
+    -- newWorld.sound.play_music.sample:play()
 
     return setmetatable(newWorld, self)
 end
 
+
 function World:update(dt)
+    -- self:playGameMusic()
     if self.view_width > -ScreenWidth then            
         self.view_width = self.view_width - 4
         if self.view_width <= -ScreenWidth then
             self.view_width = 0
         end
+    end
+end
+
+function World:playGameMusic()
+    if self.sound.play_music.sample ~= nil then
+        self.sound.play_music.sample:play()
     end
 end
 
@@ -59,18 +82,5 @@ function World:leftOfRightBorder(entity)
         onScreen = false
     end
     return onScreen
-end
-
-function World:drawGameOver(distance)
-  local image = love.graphics.newImage( 'assets/images/game-over-screen.png' )
-  love.graphics.setColor(255, 255, 255,255);
-  local msg1 = "You were caught! But you made it " .. distance .. " meters. " 
-  local msg2 = "Press Enter to escape (play) again..."
-  local font = love.graphics.newFont('assets/fonts/LilyScriptOne-Regular.ttf', DistanceFontSize)
-  love.graphics.draw(image, 0, 0)
-  love.graphics.setColor(0, 0, 0,255);
-  love.graphics.print(msg1, ScreenWidth/2-font:getWidth(msg1)/2, ScreenHeight/2-font:getHeight());
-  love.graphics.print(msg2, ScreenWidth/2-font:getWidth(msg2)/2, ScreenHeight/2);
-  love.graphics.setColor(255, 255, 255,255);
 end
 

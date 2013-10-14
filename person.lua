@@ -14,8 +14,9 @@ function Person:new(game, image_spec)
     newPerson.size = image_spec.size
 
     newPerson.type = "person"
+    newPerson.parent_type = "Foreground"
     newPerson.x = ScreenWidth
-    newPerson.y = ScreenHeight - newPerson.size.y -- - GroundYOffset
+    newPerson.y = ScreenHeight - newPerson.size.y
 
 
     if game.graphics ~= nil and game.animation ~= nil then

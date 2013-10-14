@@ -11,6 +11,7 @@ function Player:new(game, world, config)
 
     local newPlayer = Entity:new(game)
     newPlayer.type = "player"
+    newPlayer.parent_type = "Foreground"
     newPlayer.size = config.size or {
            x = 57,
            y = 59
@@ -39,6 +40,12 @@ function Player:new(game, world, config)
     newPlayer.sound = config.sound or {
         moving = {
             source = "assets/sounds/move.wav"
+        },
+        jumping = {
+            source = "assets/sounds/jumping.mp3"
+        },
+        jumping_2 = {
+            source = "assets/sounds/jumping2.mp3"
         }
     }
 
@@ -50,6 +57,7 @@ function Player:new(game, world, config)
     if game.audio ~= nil then
         newPlayer.sound.moving.sample = game.audio.newSource(newPlayer.sound.moving.source)
         newPlayer.sound.moving.sample:setLooping(true)
+        newPlayer.sound.jumping.sample = game.audio.newSource(newPlayer.sound.jumping.source)
     end
 
     if game.graphics ~= nil and game.animation ~= nil then
@@ -99,6 +107,13 @@ end
 
 function Player:handleJump()
     self.dy = -self.jump_height
+    self:playJumpSound()
+end
+
+function Player:playJumpSound()
+    if self.sound.jumping.sample ~= nil then
+        self.sound.jumping.sample:play()
+    end
 end
 
 function Player:isCaught()
@@ -140,4 +155,8 @@ function Player:update(dt)
             self.sound.moving.sample:stop()
         end
     end
+end
+
+function Player:dispose()
+    self.sound.moving.sample:stop() --else it will crash sooner or later
 end

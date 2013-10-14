@@ -2,7 +2,7 @@ require 'entity'
 require 'world'
 require 'spec/mock_spec'
 
-describe("on or off screen", function ()
+describe("world", function ()
 
     local newEntity, world
 
@@ -19,4 +19,11 @@ describe("on or off screen", function ()
     it("should return true when an entity is on screen", function()
         assert.is.equal(world:onScreen(newEntity), true)
     end)
+    
+    it("should play calming music when the game is playing", function()
+        world.sound.play_music.sample = mock_sound()
+        world:update(dt)
+        assert.spy(world.sound.play_music.sample.play).was.called()
+    end)
 end)
+
