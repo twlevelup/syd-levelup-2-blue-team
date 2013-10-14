@@ -4,7 +4,7 @@ require 'world'
 require 'conf'
 require 'distance'
 
-playerName = "YOU" -- needs to be set in the game somehow.
+playerName = "TEST" -- needs to be set in the game somehow.
 
 LeaderBoard = {}
 LeaderBoard.__index = LeaderBoard
@@ -25,7 +25,7 @@ function LeaderBoard:new(game)
 	return setmetatable(newLeaderBoard, self)
 end
 
-function LeaderBoard:readScores(distance)
+function LeaderBoard:readScores()
 	-- Read in the contents of the game scores file and save the state in the leaderboard object.
     file = love.filesystem.newFile(gameScoresFile)
 	file:open('r')
@@ -42,24 +42,32 @@ function LeaderBoard:readScores(distance)
 
 	file:close()
 
-	for i, x in ipairs(scores) do
-		if tonumber(x[2]) < distance.counter then
-			-- table.insert(scores, i, {playerName, distance:getDistance()}) -- need player and player score
-			table.insert(scores, i, {playerName, distance:getDistance()}) -- need player and player score
-			break
-		end 
-	end
-
 	self.scores = scores
 end		
 
-function LeaderBoard:writeScores()
+function LeaderBoard:updateScores(distance)
+	for i, x in ipairs(self.scores) do
+		if tonumber(x[2]) < distance then
+			table.insert(self.scores, i, {playerName, distance}) -- need player and player score
+			break
+		end 
+	end
+end
+
+function LeaderBoard:writeScores(distance)
 	-- Write the current leaderboard state to the game score file.
+
+	self:updateScores(distance)
+
     file = love.filesystem.newFile(gameScoresFile)
 	file:open('w')
 
 	for i, x in ipairs(self.scores) do
-		file:write(x[1]..' '..x[2]..'\n')
+		if i <= maxScoresOnLeaderboard then
+			file:write(x[1]..' '..x[2]..'\n')
+		else
+			break
+		end
 	end
 
 	file:close()

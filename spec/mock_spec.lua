@@ -42,6 +42,10 @@ mock_graphics = function ()
                 getWidth = spy.new(function() end),
                 getHeight = spy.new(function() end)
             }
+        end,
+        newFont = function (a, b)
+        end,
+        setFont = function (a)
         end
     }
 end

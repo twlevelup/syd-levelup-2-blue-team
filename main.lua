@@ -16,7 +16,6 @@ local entities = {}
 local world = World:new(love)
 
 local player = Player:new(love, world)
-local distance = Distance:new(love)
 local leaderboard = LeaderBoard:new(love)
 local panicmeter = Panicmeter:new(love)
 
@@ -26,14 +25,12 @@ local entity_manager = EntityManager:new(love)
 local cron = require 'cron'
 
 function love.load()
-    -- leaderboard:readScores(distance)
-    -- leaderboard:writeScores()
+    leaderboard:readScores()
 
     table.insert(entities, world)
     table.insert(entities, player)
     table.insert(entities, distance)
     table.insert(entities, panicmeter)
-    -- table.insert(entities, leaderboard)
 
     love.input.bind('up', 'up')
     love.input.bind('left', 'left')
@@ -79,8 +76,10 @@ function love.draw()
     if isGameOver() == true then
         if distance.final_distance == nil then
             distance.final_distance = distance:getDistance()
+            leaderboard:writeScores(distance.final_distance)
         end
         world:drawGameOver(distance.final_distance)
+        leaderboard:draw()
     else
         for _, e in pairs(entities) do
             e:draw()
