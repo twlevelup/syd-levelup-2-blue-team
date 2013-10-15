@@ -7,16 +7,6 @@ describe("Player", function()
     local dt = 1
 
     describe("#update", function()
-        describe("playing the movement sound", function()
-            it("should play the movement sound when the player is moving", function()
-                local player = Player:new(mock_game())
-                player.game.input = mock_input('up').input
-                player.sound.moving.sample = mock_sound()
-                player:update(dt)
-
-                assert.spy(player.sound.moving.sample.play).was.called()
-            end)
-        end)
 
         describe("new player",function()
 			it("player should be on the floor", function()
@@ -176,16 +166,6 @@ describe("Player", function()
                 player.game.input = mock_input("up").input
                 player:update(0.1)
                 assert.spy(player.handleJump).was.called(1)
-            end)
-
-             it("should play collision sound when player jumps", function ()
-                local player = Player:new(mock_game())
-                player.handleJump = spy.new(player.handleJump)
-                player.sound.jumping.sample = mock_sound()
-                player.game.input = mock_input("up").input
-                player:update(0.1)
-            
-                assert.spy(player.sound.jumping.sample.play).was.called()
             end)
         end)
     end)

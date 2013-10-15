@@ -125,9 +125,11 @@ function Player:handleJump()
 end
 
 function Player:playJumpSound()
-    self.sound.jumping.sample:stop()
-    if self.sound.jumping.sample ~= nil and self.sound.jumping.sample:isStopped() then
-        self.sound.jumping.sample:play()
+    if self.sound.jumping.sample ~= nil then
+        self.sound.jumping.sample:stop()
+        if self.sound.jumping.sample:isStopped() then
+            self.sound.jumping.sample:play()
+        end
     end
 end
 
