@@ -11,11 +11,14 @@ ScreenHeight = 500
 DistanceFontSize = 20
 DistanceMeterYOffset = 30
 DistanceMeterXOffset = ScreenWidth - 260
+DistanceFontSize = 20
 
 -- Panic meter constants
 PanicMeterXOffset = 50
 PanicMeterYOffset = 30
-DistanceFontSize = 20
+PanicMeterLabelXOffset = 60
+PanicMeterLabelYOffset = 33
+
 gameScoresFile = "gameScores.txt"
 identityDirName = "run_rabbit"
 maxScoresOnLeaderboard = 5

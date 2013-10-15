@@ -28,6 +28,7 @@ function Panicmeter:draw()
     self:drawBackground()
     self:drawFillBar()
     self:drawBorder()
+    self:drawLabel()
     self:resetColor()
 end
 
@@ -52,6 +53,10 @@ end
 function Panicmeter:drawFillBarFill(fill_x)
     self.game.graphics.setColor(255, 0, 0, 255);
     self.game.graphics.rectangle("fill", self.x, self.y, fill_x, self.size.y)
+end
+
+function Panicmeter:drawLabel()
+    self.game.graphics.print("Panic", PanicMeterLabelXOffset, PanicMeterLabelYOffset)
 end
 
 function Panicmeter:drawFillBarBorder(fill_x)
