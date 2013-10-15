@@ -11,7 +11,6 @@ require 'gameoverscreen'
 require 'screen'
 
 love.animation = require 'vendor/anim8'
-love.filesystem.setIdentity(identityDirName)
 
 local cur_screen = MainGameScreen:new(love)
 
